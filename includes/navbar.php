@@ -7,13 +7,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link <?php if($fileName == 'index.php') echo 'active'; ?>" href="#">Produits</a>
+            <a class="nav-link <?php if($fileName == 'index.php') echo 'active'; ?>" href="index.php">Produits</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Panier</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Créer un compte</a>
+            <a class="nav-link <?php if($fileName == 'signup.php') echo 'active'; ?>" href="signup.php">Créer un compte</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Se connecter</a>
