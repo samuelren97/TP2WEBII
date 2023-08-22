@@ -15,15 +15,17 @@ class ProductDao
         $this->db = $db;
     }
 
-    public function get(int $sku): Product
+    public function get(int $sku): ?Product
     {
+        $product = null;
         $req = $this->db->prepare('SELECT * FROM products WHERE sku = :sku');
         $req->bindValue(':sku', $sku, PDO::PARAM_INT);
         $req->execute();
 
-        $line = $req->fetch(PDO::FETCH_ASSOC);
-        $product = new Product($line['name'], $line['description'], (float)$line['price'], (int)$line['stock']);
-        $product->setSku($sku);
+        if ($line = $req->fetch(PDO::FETCH_ASSOC)){
+            $product = new Product($line['name'], $line['description'], (float)$line['price'], (int)$line['stock']);
+            $product->setSku($sku);
+        }
 
         $req->closeCursor();
 

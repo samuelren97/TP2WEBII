@@ -3,7 +3,10 @@ session_start();
 require_once('classes/user.class.php');
 require_once('classes/product.class.php');
 require_once('includes/connection.php');
+// filter_var(emailInput.textContent, FILTER_VALIDATE_EMAIL)
 $fileName = substr(__FILE__, strrpos(__FILE__, '\\')+1);
+
+// TODO: Confirm user connection
 ?>
 
 <!DOCTYPE html>
@@ -20,19 +23,25 @@ $fileName = substr(__FILE__, strrpos(__FILE__, '\\')+1);
     <header>
         <?php include('includes/navbar.php'); ?>
     </header>
-    <main>
-        <div class="row">
+    <main class="container-fluid">
+        <div class="row g-3 mt-3 mb-3">
             <?php
             $productDao = new ProductDao($conn);
             $productList = $productDao->getList();
 
             foreach($productList as $product) {
             ?>
-                <div class="col-lg-6 col-md-12">
-                    <img src="images/<?php echo $product->getSku() ?>.jpg">
-                </div>
+                <a href="product.php?sku=<?php echo $product->getSku();?>" class="p-5 col-lg-6 col-md-12 text-center text-decoration-none border rounded">
+                    <div>
+                        <h4><?php echo $product->getName(); ?></h4>
+                        <img src="images/<?php echo $product->getSku() ?>.jpg" alt="<?php echo $product->getDescription(); ?>">
+                        <p class="m-2"><?php echo $product->getDescription(); ?></p>
+                        <p class="fw-bold"><?php echo $product->getPrice() . '$'; ?></p>
+                    </div>
+                </a>
             <?php
             }
+            $conn = null;
             ?>
         </div>
     </main>

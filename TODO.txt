@@ -1,0 +1,6 @@
+• Authentification des clients (sécurité)
+• Ajout du client (avec validation de l’information)
+    o Mot de passe chiffré avec password_hash -- OK, a tester
+    o Le même login ne peut pas être utilisé plusieurs fois -- A FAIRE
+
+-- JPG TO PNG

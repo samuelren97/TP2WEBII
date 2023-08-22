@@ -11,7 +11,11 @@ class User {
     private $shippingAddress;
 
     public function __construct(string $email, string $password, string $firstName, string $lastName, string $shippingAddress) {
-
+        $this->setEmail($email);
+        $this->setPassword($password);
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
+        $this->setShippingAddress($shippingAddress);
     }
 
     public function getId() : int {

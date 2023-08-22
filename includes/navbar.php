@@ -16,7 +16,7 @@
             <a class="nav-link <?php if($fileName == 'signup.php') echo 'active'; ?>" href="signup.php">Créer un compte</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Se connecter</a>
+            <a class="nav-link <?php if($fileName == 'signin.php') echo 'active'; ?>" href="signin.php">Se connecter</a>
           </li>
         </ul>
       </div>

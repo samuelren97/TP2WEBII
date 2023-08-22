@@ -15,18 +15,23 @@ class UserDAO
         $this->db = $db;
     }
 
-    public function getValidatedUser(string $email, string $password) : User
+    public function getValidatedUser(string $email, string $password) : ?User
     {
         $user = null;
-        $req = $this->db->prepare('SELECT * FROM users WHERE email = :email AND password = :password');
+        $req = $this->db->prepare('SELECT * FROM users WHERE email=:email AND password=:password');
         $req->bindValue(':email', $email, PDO::PARAM_STR);
-        $req->bindValue(':password', password_hash($password, PASSWORD_BCRYPT), PDO::PARAM_STR);
+        $req->bindValue(':password', hash('sha256', $password), PDO::PARAM_STR);
         $req->execute();
 
-        if ($line = $req->fetch(PDO::FETCH_ASSOC)){
-            $user = new User($line['email'], $line['password'], $line['firstName'], $line['lastName'], $line['shippingAddress']);
+        var_dump($req->rowCount());
+        if ($req->rowCount() > 0){
+            echo 'if reached';
+            $line = $req->fetch(PDO::FETCH_ASSOC);
+            var_dump($line);
+            $user = new User($line['email'], $line['password'], $line['first_name'], $line['last_name'], $line['shipping_address']);
             $user->setId($line['id']);
         }
+
         $req->closeCursor();
         return $user;
     }
