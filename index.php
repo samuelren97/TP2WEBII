@@ -35,7 +35,7 @@ $fileName = substr(__FILE__, strrpos(__FILE__, '\\')+1);
                     <div>
                         <h4><?php echo $product->getName(); ?></h4>
                         <img src="images/<?php echo $product->getSku() ?>.jpg" alt="<?php echo $product->getDescription(); ?>">
-                        <p class="m-2"><?php echo $product->getDescription(); ?></p>
+                        <!-- <p class="m-2"><?php // echo $product->getDescription(); ?></p> -->
                         <p class="fw-bold"><?php echo $product->getPrice() . '$'; ?></p>
                     </div>
                 </a>

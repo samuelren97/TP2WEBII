@@ -16,7 +16,17 @@
             <a class="nav-link <?php if($fileName == 'signup.php') echo 'active'; ?>" href="signup.php">Créer un compte</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php if($fileName == 'signin.php') echo 'active'; ?>" href="signin.php">Se connecter</a>
+            
+            <?php if (!isset($_SESSION['userId'])) {
+              echo "<a class='nav-link ";
+              if($fileName == 'signin.php') echo 'active';
+              echo "' href='signin.php'>Se connecter</a>";
+            } else {
+              echo "<a class='nav-link ";
+              if($fileName == 'signin.php') echo 'active'; 
+              echo "' href='signout.php'>Se déconnecter</a>";
+            }
+            ?>
           </li>
         </ul>
       </div>
