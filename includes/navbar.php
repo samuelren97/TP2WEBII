@@ -23,7 +23,7 @@
               echo "' href='signin.php'>Se connecter</a>";
             } else {
               echo "<a class='nav-link ";
-              if($fileName == 'signin.php') echo 'active'; 
+              if($fileName == 'signout.php') echo 'active'; 
               echo "' href='signout.php'>Se déconnecter</a>";
             }
             ?>

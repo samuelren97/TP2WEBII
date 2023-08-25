@@ -1,4 +1,5 @@
 <?php
+session_start();
 $fileName = substr(__FILE__, strrpos(__FILE__, '\\')+1);
 ?>
 
