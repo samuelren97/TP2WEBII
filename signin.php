@@ -49,28 +49,28 @@ if ($isPost && isset($_POST['email'])) {
         <?php include('includes/navbar.php'); ?>
     </header>
 
-    <main class="container-fluid">
+    <main class="container-fluid mt-3">
         <form class="row needs-validation m-5" action="signin.php" method="post" id='signin' novalidate>
-                <h4>Se connecter</h4>
-                <div class="col-lg-6 col-md-12">
-                    <label for="email" class="form-label">Courriel</label>
-                    <input type="email"
-                        class="form-control"
-                        id="email"
-                        name="email"
-                        value="<?php echo $email; ?>"
-                        required>
-                    <div class="invalid-feedback">
-                        Votre courriel est obligatoire
-                    </div>
+            <h4 class="mb3">Se connecter</h4>
+            <div class=" col-lg-6 col-md-12 mb-3">
+                <label for="email" class="form-label mb3">Courriel</label>
+                <input type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    value="<?php echo $email; ?>"
+                    required>
+                <div class="invalid-feedback">
+                    Votre courriel est obligatoire
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <label for="password" class="form-label">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                    <div class="invalid-feedback">
-                        Le mot de passe est obligatoire
-                    </div>
+            </div>
+            <div class="col-lg-6 col-md-12 mb-3">
+                <label for="password" class="form-label mb3">Mot de passe</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="invalid-feedback">
+                    Le mot de passe est obligatoire
                 </div>
+            </div>
             <div class="col-12 mt-3">
                 <button class="btn btn-primary" type="submit">Se connecter</button>
             </div>

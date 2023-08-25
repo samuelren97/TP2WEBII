@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `baie_ourson`
 --
-
+DROP DATABASE IF EXISTS tp2_samuel_alexandre;
 CREATE DATABASE TP2_Samuel_Alexandre;
 USE TP2_Samuel_Alexandre;
 -- --------------------------------------------------------
@@ -98,11 +98,11 @@ COMMIT;
 
 INSERT INTO `products` (`sku`, `name`, `description`, `price`, `stock`) VALUES
 (154789, 'Schecter Evil Twin SLS-Elite', 'Noir et blanche avec des têtes de mort!', '1799.95', 2),
-(612458, 'Jackson King-V', 'Manche en érable et ganirtures chromées', '1999.99', 4),
-(887414, 'Solar V1.6 Vinter', 'Logo gravé sur la 12eme touche', '1495.99', 5),
+(612458, 'Jackson King-V', 'Manche en érable et ganirtures chromées', '1999.95', 4),
+(887414, 'Solar V1.6 Vinter', 'Logo gravé sur la 12eme touche', '1495.95', 5),
 (634920, 'Solar AB1.4JN FLAME BLACK','Basse plus noire que la nuit', '1355.95', 2),
 (936421, 'Fender American Ultra Jazz Bass V', 'Basse 5 cordes faite à la main','2455.95', 1),
-(238954, 'BC Rich Ironbird MK1', "Basse aussi coupante qu'un rasoir", '1325.00', 5);
+(238954, 'BC Rich Ironbird MK1', "Basse aussi coupante qu'un rasoir", '1325.95', 5);
 
 SELECT * FROM products;
 

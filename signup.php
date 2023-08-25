@@ -68,10 +68,10 @@ if ($isPost && isset($_POST['email'])) {
 
     <main class="container-fluid">
         <form class="m-5 needs-validation" action="signup.php" method="post" id='signup' novalidate>
-            <fieldset class="row mt-3">
+            <fieldset class="row">
                 <h4>Informations sur le compte</h4>
-                <div class="col-md-12">
-                    <label for="email" class="form-label">Courriel</label>
+                <div class="col-md-12 mb-3">
+                    <label for="email" class="form-label mb-3">Courriel</label>
                     <input 
                         type="email" 
                         class="form-control" 
@@ -82,15 +82,15 @@ if ($isPost && isset($_POST['email'])) {
                         Votre courriel est obligatoire
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <label for="password" class="form-label">Mot de passe</label>
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label for="password" class="form-label mb-3">Mot de passe</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                     <div class="invalid-feedback">
                         Le mot de passe est obligatoire
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <label for="passwordConf" class="form-label">Confirmation du mot de passe</label>
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label for="passwordConf" class="form-label mb-3">Confirmation du mot de passe</label>
                     <input type="password" class="form-control" id="passwordConf" name="passwordConf" required>
                     <div class="invalid-feedback">
                         Entrez de nouveau votre mot de passe
@@ -99,8 +99,8 @@ if ($isPost && isset($_POST['email'])) {
             </fieldset>
             <fieldset class="row mt-3">
                 <h4>Informations sur la livraison</h4>
-                <div class="col-lg-6 col-md-12">
-                    <label for="firstName" class="form-label">Prénom</label>
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label for="firstName" class="form-label mb-3">Prénom</label>
                     <input 
                         type="text" 
                         class="form-control" 
@@ -112,8 +112,8 @@ if ($isPost && isset($_POST['email'])) {
                         Votre nom est obligatoire
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <label for="lastName" class="form-label">Nom</label>
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label for="lastName" class="form-label mb-3">Nom</label>
                     <input 
                         type="text" 
                         class="form-control" 
@@ -125,8 +125,8 @@ if ($isPost && isset($_POST['email'])) {
                         Votre prénom est obligatoire
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <label for="shippingAddress" class="form-label">Adresse de livraison</label>
+                <div class="col-md-12 mb-3">
+                    <label for="shippingAddress" class="form-label mb-3">Adresse de livraison</label>
                     <input 
                         type="text" 
                         class="form-control" 
@@ -139,7 +139,7 @@ if ($isPost && isset($_POST['email'])) {
                     </div>
                 </div>
             </fieldset>
-            <div class="col-12 mt-3">
+            <div class="col-12">
                 <button class="btn btn-primary" type="submit">S'inscrire</button>
             </div>
         </form>
