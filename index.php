@@ -41,10 +41,9 @@ $isSignoutSuccess = isset($_GET['signout']);
                 </a>
                 <?php
             }
-            $conn = null;
             ?>
         </div>
-
+        
         <?php if($isLoginSuccess) {?>
             <div class="m-5 toast show position-fixed bottom-0 end-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header bg-success">
@@ -55,7 +54,7 @@ $isSignoutSuccess = isset($_GET['signout']);
                     La connexion a réussi.
                 </div>
             </div>
-        <?php } 
+            <?php } 
         if ($isSignoutSuccess) {?>
             <div class="m-5 toast show position-fixed bottom-0 end-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header bg-success">
@@ -66,12 +65,14 @@ $isSignoutSuccess = isset($_GET['signout']);
                     La déconnexion a réussi.
                 </div>
             </div>
-        <?php } ?>
-
-    </main>
-    <footer>
-        <?php include('includes/footer.php'); ?>
-    </footer>
-</body>
-
-</html>
+            <?php } 
+            ?>
+            
+        </main>
+        <footer>
+            <?php include('includes/footer.php'); ?>
+        </footer>
+    </body>
+    
+    </html>
+    <?php $conn = null; ?>

@@ -54,12 +54,10 @@ $price = $product->getPrice();
             </form>
 
         </div>
-        <?php
-        $conn = null;
-        ?>
     </main>
     <footer>
         <?php include('includes/footer.php'); ?>
     </footer>
 </body>
 </html>
+<?php $conn = null; ?>

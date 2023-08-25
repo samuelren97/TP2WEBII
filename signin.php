@@ -124,7 +124,6 @@ if ($isPost && isset($_POST['email'])) {
             </div>
         <?php 
         }
-        $conn = null;
         ?>
     </main>
     <footer>
@@ -132,3 +131,4 @@ if ($isPost && isset($_POST['email'])) {
     </footer>
 </body>
 </html>
+<?php $conn = null; ?>

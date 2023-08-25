@@ -189,12 +189,12 @@ if ($isPost && isset($_POST['email'])) {
             </div>
         <?php 
         }
-        $conn = null;
         ?>
 
-    </main>
-    <footer>
-        <?php include('includes/footer.php'); ?>
-    </footer>
+</main>
+<footer>
+    <?php include('includes/footer.php'); ?>
+</footer>
 </body>
 </html>
+<?php $conn = null; ?>
