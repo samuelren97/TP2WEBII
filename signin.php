@@ -6,13 +6,16 @@ require_once('classes/user.class.php');
 require_once('includes/functions.php');
 
 $hasLoginError = false;
+$email = '';
 
 if (isset($_POST['email'])) {
     $userId = getValidatedUserId($conn);
+    $email = $_POST['email'];
     
     if ($userId != -1) {
         $_SESSION['userId'] = $userId;
-        redirectToIndexAndExit();
+        header('Location: index.php?login=true');
+        exit;
     } else {
         $hasLoginError = true;
     }
@@ -34,11 +37,16 @@ if (isset($_POST['email'])) {
     </header>
 
     <main class="container-fluid">
-        <form class="row needs-validation" action="signin.php" method="post" id='signin' novalidate>
+        <form class="row needs-validation m-5" action="signin.php" method="post" id='signin' novalidate>
                 <h4>Se connecter</h4>
                 <div class="col-lg-6 col-md-12">
                     <label for="email" class="form-label">Courriel</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        value="<?php echo $email; ?>"
+                        required>
                     <div class="invalid-feedback">
                         Votre courriel est obligatoire
                     </div>
@@ -58,8 +66,14 @@ if (isset($_POST['email'])) {
         <?php
         if ($hasLoginError) {
         ?>
-            <div class="alert alert-danger" role="alert">
-                <p>Il y a un erreur avec vos informations de connexion</p>
+            <div class="m-5 toast show position-fixed bottom-0 end-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-danger">
+                    <strong class="me-auto text-white">Erreur</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Il y a une erreur avec vos informations de connexion
+                </div>
             </div>
         <?php
         }

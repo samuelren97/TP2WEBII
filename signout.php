@@ -1,12 +1,11 @@
 <?php
 session_start();
+require_once('includes/functions.php');
 
 if (isset($_SESSION['userId'])) {
-    // TODO: Remove session var userId
     unset($_SESSION['userId']);
-    echo "OK";
+    header('Location: index.php?signout=true');
+    exit;
 }
-
-header('Location: index.php');
-exit;
+redirectToIndexAndExit();
 ?>

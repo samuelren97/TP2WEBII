@@ -22,7 +22,6 @@ class UserDAO
         $req->bindValue(':email', $email, PDO::PARAM_STR);
         $req->execute();
 
-        var_dump($req->rowCount());
         if ($req->rowCount() > 0){
             $line = $req->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $line['password'])) {
