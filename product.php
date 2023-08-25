@@ -34,7 +34,7 @@ $price = $product->getPrice();
     </header>
     <main class="row g-5 mt-3 mb-3">
         <div class="col-lg-6 col-md-12 text-center">
-            <img src="images/<?php echo $sku;?>.jpg" alt="Image d'une guitare">
+            <img src="images/<?php echo $sku;?>.png" alt="Image d'une guitare">
         </div>
         <div class="col-lg-6 col-md-12 pt-5 pb-5 border rounded">
             <h4><?php echo $name; ?></h4>

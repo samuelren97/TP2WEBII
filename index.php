@@ -34,7 +34,7 @@ $fileName = substr(__FILE__, strrpos(__FILE__, '\\')+1);
                 <a href="product.php?sku=<?php echo $product->getSku();?>" class="p-5 col-lg-6 col-md-12 text-center text-decoration-none border rounded">
                     <div>
                         <h4><?php echo $product->getName(); ?></h4>
-                        <img src="images/<?php echo $product->getSku() ?>.jpg" alt="<?php echo $product->getDescription(); ?>">
+                        <img src="images/<?php echo $product->getSku() ?>.png" alt="<?php echo $product->getDescription(); ?>">
                         <!-- <p class="m-2"><?php // echo $product->getDescription(); ?></p> -->
                         <p class="fw-bold"><?php echo $product->getPrice() . '$'; ?></p>
                     </div>
