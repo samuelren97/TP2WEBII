@@ -26,12 +26,24 @@ class UserDAO
             $line = $req->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $line['password'])) {
                 $user = new User($line['email'], $line['password'], $line['first_name'], $line['last_name'], $line['shipping_address']);
-                $user->setId($line['id']);
             }
         }
 
         $req->closeCursor();
         return $user;
+    }
+
+    public function userExists(string $email) : bool {
+        $req = $this->db->prepare('SELECT email FROM users WHERE email=:email');
+
+        $req->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $req->execute();
+
+        if ($req->rowCount() > 0) {
+            return true;
+        }
+        return false;
     }
     
     public function add(User $user): void
@@ -50,7 +62,6 @@ class UserDAO
         
         
         $last_id = $this -> db->lastInsertId();
-        $user->setId((int)$last_id);
 
         $req->closeCursor();
     }

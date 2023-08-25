@@ -5,19 +5,32 @@ require_once('includes/connection.php');
 require_once('classes/user.class.php');
 require_once('includes/functions.php');
 
+if (isset($_SESSION['email']))
+    redirectToIndexAndExit();
+
+$hasFormErrors = false;
 $hasLoginError = false;
 $email = '';
+$isPost = $_SERVER['REQUEST_METHOD'] === 'POST';
 
-if (isset($_POST['email'])) {
-    $userId = getValidatedUserId($conn);
+$isNewUser = isset($_GET['new_user']);
+
+if ($isPost && isset($_POST['email'])) {
     $email = $_POST['email'];
     
-    if ($userId != -1) {
-        $_SESSION['userId'] = $userId;
-        header('Location: index.php?login=true');
-        exit;
+    if (!isValidEmail($email) || empty($_POST['password'])) {
+        $hasFormErrors = true;
     } else {
-        $hasLoginError = true;
+        $userDao = new UserDAO($conn);
+        $user = $userDao->getValidatedUser($email, $_POST['password']);
+        
+        if ($user != null) {
+            $_SESSION['email'] = $user->getEmail();
+            header('Location: index.php?login=true');
+            exit;
+        } else {
+            $hasLoginError = true;
+        }
     }
 }
 ?>
@@ -76,6 +89,40 @@ if (isset($_POST['email'])) {
                 </div>
             </div>
         <?php
+        }
+        if ($hasFormErrors) {?>
+            <div class="m-5 toast show position-fixed bottom-0 end-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-danger">
+                    <strong class="me-auto text-white">Erreur(s)</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <ul>
+                        <?php 
+                        if(!isValidEmail($email)){
+                            echo "<li>Le courriel n'est pas valide.</li>";
+                        }
+                        if(empty($_POST['password'])){
+                            echo "<li>Le mot de passe est obligatoire.</li>";
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        <?php }
+        if ($isNewUser) { ?>
+            <div class="m-5 toast show position-fixed bottom-0 end-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-success">
+                    <strong class="me-auto text-white">Succès</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <ul>
+                        Votre compte a été crée avec succès.
+                    </ul>
+                </div>
+            </div>
+        <?php 
         }
         $conn = null;
         ?>

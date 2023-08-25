@@ -3,7 +3,6 @@ declare(strict_types=1);
 require_once('userDAO.class.php');
 
 class User {
-    private $id;
     private $email;
     private $password;
     private $firstName;
@@ -18,21 +17,12 @@ class User {
         $this->setShippingAddress($shippingAddress);
     }
 
-    public function getId() : int {
-        return $this->id;
-    }
-    public function setId(int $id) : void {
-        if ($id < 0)
-            throw new Exception("The ID cannot be negative");
-        $this->id = $id;
-    }
-
     public function getEmail() : string {
         return $this->email;
     }
     public function setEmail(string $email) : void {
         if ($email == null || empty(trim($email)))
-            throw new Exception('The email cannot be empty or null'); // TODO: Validate with REGEX
+            throw new Exception('The email cannot be empty or null');
         $this->email = $email;
     }
 
@@ -41,7 +31,7 @@ class User {
     }
     public function setPassword(string $password) : void {
         if ($password == null || empty(trim($password)))
-            throw new Exception('The password cannot be empty or null'); // TODO: Validate password
+            throw new Exception('The password cannot be empty or null');
         $this->password = $password;
     }
 
@@ -68,7 +58,7 @@ class User {
     }
     public function setShippingAddress(string $shippingAddress) : void {
         if ($shippingAddress == null || empty(trim($shippingAddress)))
-            throw new Exception('The shippingAddress cannot be empty or null'); // TODO: Validate shipping address
+            throw new Exception('The shippingAddress cannot be empty or null');
         $this->shippingAddress = $shippingAddress;
     }
 }

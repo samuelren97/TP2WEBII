@@ -5,16 +5,11 @@ function redirectToIndexAndExit() {
     exit();
 }
 
-function getValidatedUserId(PDO $conn) : int {
-    $userDao = new UserDAO($conn);
-    
-    $user = $userDao->getValidatedUser($_POST['email'], $_POST['password']);
-    if ($user == null) {
-        $userId = -1;
-    } else {
-        $userId = $user->getId();
+function isValidEmail(string $email) : bool {
+    $regex = "/[a-z0-9]+@[a-z]+.[a-z]{2,3}/";
+    if (preg_match($regex, $email) == 1) {
+        return true;
     }
-
-    return $userId;
+    return false;
 }
 ?>

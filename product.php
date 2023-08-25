@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('classes/product.class.php');
 require_once('includes/connection.php');
 require_once('includes/functions.php');
@@ -21,7 +22,7 @@ $price = $product->getPrice();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +33,7 @@ $price = $product->getPrice();
     <header>
         <?php include('includes/navbar.php'); ?>
     </header>
-    <main class="row g-5 mt-3 mb-3">
+    <main class="row g-5 mt-3 mb-3 container-fluid">
         <div class="col-lg-6 col-md-12 text-center">
             <img src="images/<?php echo $sku;?>.png" alt="Image d'une guitare">
         </div>
@@ -41,13 +42,13 @@ $price = $product->getPrice();
             <p><?php echo $description; ?></p>
             <h5><?php echo $price; ?>$</h5>
 
-            <form action="#" method="post"> <!-- TODO: Set action -->
+            <form action="#" method="post"> <!-- TODO: Set action  PARTIE 2-->
                 <div class="row g-5">
                     <div class="col-sm-6">
                         <input type="number" class="form-control" id="quantity" name="quantity" min='0' value='1' required>
                     </div>
                     <div class="col-sm-6">
-                        <input type="submit" class="btn btn-primary value="Ajouter au panier">
+                        <button type="submit" class="btn btn-outline-primary">Ajouter au panier</button>
                     </div>
                 </div>
             </form>
