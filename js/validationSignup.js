@@ -15,6 +15,7 @@ form.addEventListener('submit', validate);
 function validate(event) {
     let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
     let isValidEmail = regex.test(emailInput.value.trim());
+    passConfInput.setCustomValidity('');
     if (!form.checkValidity() || 
     !isValidEmail || 
     !isSamePassword() || 
@@ -33,7 +34,6 @@ function isSamePassword() {
     let passConfInputText = passConfInput.value.trim();
 
     if(passInputText.length > 0 && passInputText == passConfInputText){
-        passConfInput.setCustomValidity('');
         return true;
     }
 
