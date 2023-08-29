@@ -12,4 +12,15 @@ function isValidEmail(string $email) : bool {
     }
     return false;
 }
+
+function getProductIndexInArray(int $skuToFind, array $array) : int {
+    $INDEX_NOT_FOUND_CODE = -1;
+    for($i=0; $i < count($array); $i++) {
+        $productSku= $array[$i]->getProduct()->getSku();
+        if ($productSku == $skuToFind) {
+            return $i;
+        }
+    }
+    return $INDEX_NOT_FOUND_CODE;
+}
 ?>

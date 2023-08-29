@@ -1,27 +1,28 @@
 <?php
 declare(strict_types=1);
+require_once('classes/product.class.php');
 
 class CartItem
 {
-    private $productSku;
+    private $product;
     private $productQuantity;
 
-    public function __construct(int $productSku, int $productQuantity)
+    public function __construct(Product $product, int $productQuantity)
     {
-        $this->setProductSku($productSku);
+        $this->setProductSku($product);
         $this->setProductQuantity($productQuantity);
     }
 
-    public function getProductSku()
+    public function getProduct()
     {
-        return $this->productSku;
+        return $this->product;
     }
-    public function setProductSku(int $sku)
+    public function setProductSku(Product $product)
     {
-        if ($sku < 0)
-            throw new Exception('Sku cannot be negative');
+        if ($product == null)
+            throw new Exception('The product cannot be null');
 
-        $this->productSku = $sku;
+        $this->product = $product;
     }
 
     public function getProductQuantity()
