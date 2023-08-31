@@ -15,8 +15,4 @@ class CartTest extends TestCase
         
         $this->assertFalse($cart == null);
     }
-
-
-
-
 }
