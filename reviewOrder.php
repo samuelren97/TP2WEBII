@@ -7,7 +7,7 @@ require_once('classes/user.class.php');
 
 if(isset($_POST['checkoutConfirmation'])){
     $_SESSION['checkoutConfirmation'] = true;
-    header('Location : confirm.php');
+    header('Location: confirm.php');
     exit();
 }
 
