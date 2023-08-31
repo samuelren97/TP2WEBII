@@ -1,8 +1,13 @@
 <?php declare(strict_types=1);
 
-function redirectToIndexAndExit() {
+function redirectToIndexAndExit() : void{
     header('Location: index.php');
-    exit;
+    exit();
+}
+
+function redirectToErrorPageAndExit() : void {
+    header('Location: error404.php');
+    exit();
 }
 
 function isValidEmail(string $email) : bool {

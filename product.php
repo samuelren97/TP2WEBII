@@ -8,12 +8,16 @@ $fileName = '';
 $isPost = $_SERVER['REQUEST_METHOD'] === 'POST';
 
 if (isset($_GET['sku'])) {
-    $sku =  $_GET['sku'];
-    $productDao = new ProductDao($conn);
-    
-    $product = $productDao->get($sku);
-    if ($product == null)
-    redirectToIndexAndExit();
+    if (is_numeric($_GET['sku'])) {
+        $sku =  $_GET['sku'];
+        $productDao = new ProductDao($conn);
+        
+        $product = $productDao->get($sku);
+        if ($product == null)
+            redirectToErrorPageAndExit();
+    } else {
+        redirectToErrorPageAndExit();
+    }
 } else {
     redirectToIndexAndExit();
 }

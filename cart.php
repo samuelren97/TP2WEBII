@@ -16,13 +16,20 @@ if (isset($_POST['quantity'])) {
     } else {
         $cartItems[$indexInArray]->setProductQuantity($_POST['quantity']);
     }
-
+    
     $_SESSION['cartItems'] = serialize($cartItems);
     header('Location: cart.php');
     exit();
 }
 
-// TODO: Check if cart is set
+$totalPrice = 0;
+$hasEmptyCart = true;
+
+if (isset($_SESSION['cartItems'])) {
+    if (sizeof(unserialize($_SESSION['cartItems'])) > 0) {
+        $hasEmptyCart = false;
+    }
+}
 
 ?>
 
@@ -32,7 +39,7 @@ if (isset($_POST['quantity'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart | Maverick Custom Shop </title>
+    <title>Panier | Maverick Custom Shop </title>
     <?php require_once('includes/head.php'); ?>
 </head>
 
@@ -44,9 +51,15 @@ if (isset($_POST['quantity'])) {
         <h1>Votre Panier</h1>
 
         <?php
+
+        if ($hasEmptyCart) {?>
+            <div>
+                Le panier est vide pour le moment.
+            </div>
+        <?php }
+
         if (isset($_SESSION['cartItems'])) {
 
-            $totalPrice = 0;
             $cartItems = unserialize($_SESSION['cartItems']);
             foreach ($cartItems as $item) {
                 $product = $item->getProduct();
@@ -95,8 +108,13 @@ if (isset($_POST['quantity'])) {
                     </form>
                 </div>
                 <?php }}?>
+<<<<<<< HEAD
         <p>
             Sous-total : <?php echo $totalPrice ?> $
+=======
+        <p>Sous-total : 
+            <?php echo $totalPrice ?> $
+>>>>>>> 78c8fc1d2587cf451bb9d4f9ded57791cfa91c06
         </p>
         <form action="cart.php" method="post">
             <button type="submit" class="btn btn-outline-primary">Passer la commande</button>
