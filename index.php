@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 session_start();
 require_once('classes/user.class.php');
 require_once('classes/product.class.php');
 require_once('includes/connection.php');
+require_once('classes/cart.class.php');
 $fileName = substr(__FILE__, strrpos(__FILE__, '\\')+1);
 
 $isLoginSuccess = isset($_GET['login']);

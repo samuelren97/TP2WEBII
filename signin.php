@@ -14,6 +14,7 @@ $email = '';
 $isPost = $_SERVER['REQUEST_METHOD'] === 'POST';
 
 $isNewUser = isset($_GET['new_user']);
+$isNotLoggedIn = isset($_GET['no_login']);
 
 if ($isPost && isset($_POST['email'])) {
     $email = $_POST['email'];
@@ -120,6 +121,21 @@ if ($isPost && isset($_POST['email'])) {
                     <ul>
                         Votre compte a été crée avec succès.
                     </ul>
+                </div>
+            </div>
+        <?php 
+        }
+        
+        if ($isNotLoggedIn) { ?>
+            <div class="m-5 toast show position-fixed bottom-0 end-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-danger">
+                    <strong class="me-auto text-white">Connexion requise</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p>
+                        Pour passer un commande, vous devez être connecté.
+                    </p>
                 </div>
             </div>
         <?php 

@@ -36,4 +36,4 @@
       </div>
     </div>
 </nav>
-<?php //var_dump($_SESSION['cartItems']); ?>
+<?php //var_dump($_SESSION['cart']); ?>

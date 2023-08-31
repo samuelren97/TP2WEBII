@@ -9,15 +9,15 @@ class CartItem
 
     public function __construct(Product $product, int $productQuantity)
     {
-        $this->setProductSku($product);
+        $this->setProduct($product);
         $this->setProductQuantity($productQuantity);
     }
 
-    public function getProduct()
+    public function getProduct() : Product
     {
         return $this->product;
     }
-    public function setProductSku(Product $product)
+    public function setProduct(Product $product) : void
     {
         if ($product == null)
             throw new Exception('The product cannot be null');
@@ -25,11 +25,23 @@ class CartItem
         $this->product = $product;
     }
 
-    public function getProductQuantity()
+    public function getProductSku() : int {
+        return $this->product->getSku();
+    }
+
+    public function setProductSku(int $sku) : void {
+        $this->getProduct()->setSku($sku);
+    }
+
+    public function getProductStock () : int {
+        return $this->getProduct()->getStock();
+    }
+
+    public function getProductQuantity() : int
     {
         return $this->productQuantity;
     }
-    public function setProductQuantity(int $quantity)
+    public function setProductQuantity(int $quantity) : void
     {
         if ($quantity<0)
             throw new Exception('Quantity cannot be negative');

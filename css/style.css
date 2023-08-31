@@ -21,3 +21,24 @@
 .banner .sub-title {
     font-size: 150%;
 }
+
+.bold {
+    font-weight: 900;
+}
+
+.infoTitle, .infoData{
+    display: inline-block;
+}
+
+.infoTitle {
+    width: 100px;
+    font-weight: 900;
+}
+
+.larger {
+    width: 150px;
+}
+
+#btnDiv > form, #btnDiv > button {
+    display: inline-block;
+}

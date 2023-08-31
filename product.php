@@ -4,9 +4,11 @@ require_once('classes/cartItem.class.php');
 require_once('classes/product.class.php');
 require_once('includes/connection.php');
 require_once('includes/functions.php');
+require_once('classes/cart.class.php');
 $fileName = '';
 $isPost = $_SERVER['REQUEST_METHOD'] === 'POST';
-
+$quantityInCart = 0;
+$cart = null;
 if (isset($_GET['sku'])) {
     if (is_numeric($_GET['sku'])) {
         $sku =  $_GET['sku'];
@@ -22,26 +24,29 @@ if (isset($_GET['sku'])) {
     redirectToIndexAndExit();
 }
 
+if (isset($_SESSION['cart'])) {
+    $cart = unserialize($_SESSION['cart']);
+    $cartItems = $cart->getCartItems();
+    $indexInArray = getProductIndexInArray($sku, $cartItems);
+    if ($indexInArray >=0) {
+        $quantityInCart = $cartItems[$indexInArray]->getProductQuantity();
+    }
+}
+
 if (isset($_POST['quantity'])) {
+    if ($_POST['quantity'] == 0) {
+        header('Location: product.php?sku='. $sku);
+        exit();
+    }
     if ($_POST['quantity'] <= $product->getStock()) {
         $cartItem = new CartItem($product, $_POST['quantity']);
-        $cartExists = isset($_SESSION['cartItems']);
-        $cartItems = array();
-        if ($cartExists) {
-            $cartItems = unserialize($_SESSION['cartItems']);
-            $indexInArray = getProductIndexInArray($sku, $cartItems);
-            if ($indexInArray >= 0) {
-                // TODO: Validate quantity from stock with ones in cart
-                $quantity = $cartItems[$indexInArray]->getProductQuantity();
-                $cartItems[$indexInArray]->setProductQuantity($quantity + $cartItem->getProductQuantity());
-            } else {
-                array_push($cartItems, $cartItem);
-            }
-        } else {
-            array_push($cartItems, $cartItem);
+        $cartItem->setProductSku($sku);
+        if ($cart == null) {
+            $cart = new Cart();
         }
-
-        $_SESSION['cartItems'] = serialize($cartItems);
+        
+        $cart->addCartItem($cartItem);
+        $_SESSION['cart'] = serialize($cart);
         header('Location: cart.php');
         exit();
     }
@@ -60,6 +65,7 @@ $stock = $product->getStock();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $name . " | Maverick Custom Shop" ?></title>
     <?php require_once('includes/head.php'); ?>
+    <script defer src="js/validationProduct.js"></script>
 </head>
 <body>
     <header>
@@ -75,18 +81,22 @@ $stock = $product->getStock();
             <p><?php echo $description; ?></p>
             <h5><?php echo $price; ?>$</h5>
 
-            <form action="product.php?sku=<?php echo $sku; ?>" method="post">
+            <form class="needs-validation" action="product.php?sku=<?php echo $sku; ?>" method="post" novalidate>
                 <div class="row g-5">
                     <div class="col-sm-12 col-md-6">
-                        <input type="number" class="form-control" id="quantity" name="quantity" min='0' value='1' 
-                            max="<?php echo $stock; ?>"
+                        <input type="number" class="form-control" id="quantity" name="quantity" min='0' value='0'
+                            max="<?php echo $stock - $quantityInCart; ?>"
                             required>
+                        <div class="invalid-feedback">
+                            La quantité demandée n'est pas valide
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <button type="submit" class="btn btn-outline-primary">Ajouter au panier</button>
                     </div>
                     <div class="col-sm-12">
                         <p class="text-success">Quantité en stock: <?php echo $stock; ?></p>
+                        <p>Quantité dans le panier: <?php echo $quantityInCart;?></p>
                         <?php if ($isPost) {?>
                             <p class="text-danger">Il y a seulement <?php echo $stock?> de ce modèle en stock.</p>
                         <?php }?>

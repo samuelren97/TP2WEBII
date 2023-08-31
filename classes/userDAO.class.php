@@ -15,6 +15,22 @@ class UserDAO
         $this->db = $db;
     }
 
+    public function getUserWithEmail(string $email) : ?User
+    {
+        $user = null;
+        $req = $this->db->prepare('SELECT * FROM users WHERE email=:email');
+        $req->bindValue(':email', $email, PDO::PARAM_STR);
+        $req->execute();
+
+        if ($req->rowCount() > 0){
+            $line = $req->fetch(PDO::FETCH_ASSOC);
+            $user = new User($line['email'], $line['password'], $line['first_name'], $line['last_name'], $line['shipping_address']);
+        }
+
+        $req->closeCursor();
+        return $user;
+    }
+
     public function getValidatedUser(string $email, string $password) : ?User
     {
         $user = null;

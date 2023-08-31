@@ -1,22 +1,24 @@
 <?php
 declare(strict_types=1);
 require_once('cartItem.class.php');
+require_once('includes/functions.php');
 
 class Cart
 {
-    private $cartItems;
-    private $email;
+    private array $cartItems;
+    private string $email;
 
-    public function __construct(string $email)
+    public function __construct()
     {
-        $this->setEmail($email);
-        $this->setCartItems(array());
+        $this->cartItems = array();
+        $this->email = '';
     }
 
     public function getCartItems(): array
     {
         return $this->cartItems;
     }
+    
     private function setCartItems(array $cartItems): void
     {
         if ($cartItems == null)
@@ -24,16 +26,15 @@ class Cart
         $this->cartItems = $cartItems;
     }
 
-    // TODO: Add function to get email -> DONE
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    private function setEmail(string $email)
+    public function setEmail(string $email) : void
     {
         if ($email == null)
-            throw new Exception('User cannot be null');
+            throw new Exception('Email cannot be null');
         $this->email = $email;
     }
 
@@ -41,23 +42,25 @@ class Cart
     {
         if ($cartItem == null)
             throw new Exception('CartItem cannot be null');
-        // FIXME: Verify if item already in cart, if so, add quantity
-        array_push($this->cartItems, $cartItem);
-    }
 
-    // TODO: Add quantity
+        $sku = $cartItem->getProduct()->getSku();
+        $indexInArray = getProductIndexInArray($sku, $this->cartItems);
+        if ($indexInArray >= 0) {
+            // TODO: Validate quantity from stock with ones in cart
+            $quantity = $this->cartItems[$indexInArray]->getProductQuantity();
+            $stockQuantity = $this->cartItems[$indexInArray]->getProductStock();
 
-    public function removeCartItem(CartItem $cartItem): void
-    {
-        if ($cartItem == null)
-            throw new Exception('CartItem cannot be null');
-
-            if ($index = array_search($cartItem, $this->cartItems)) {
-                unset($cartItems[$index]);
+            if($stockQuantity-$quantity>0){
+                $this->cartItems[$indexInArray]->setProductQuantity($quantity + $cartItem->getProductQuantity());
             }
-
+        } else {
+            array_push($this->cartItems, $cartItem);
+        }
     }
 
-    // TODO: Remove quantity
+    public function removeCartItem(int $indexInArray): void
+    {
+        array_splice($this->cartItems, $indexInArray, 1);
+    }
 }
 ?>

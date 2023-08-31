@@ -4,31 +4,58 @@ require_once('classes/product.class.php');
 require_once('includes/connection.php');
 require_once('includes/functions.php');
 require_once('classes/cartItem.class.php');
+require_once('classes/cart.class.php');
 $fileName = substr(__FILE__, strrpos(__FILE__, '\\') + 1);
+$hasCartEmptyAlert = isset($_GET['cart_empty']);
+$hasQuantityError = isset($_GET['quantity_err']);
 
 if (isset($_POST['quantity'])) {
-    $cartItems = array();
-    $cartItems = unserialize($_SESSION['cartItems']);
-    $indexInArray = getProductIndexInArray($_POST['productSku'], $cartItems);
-    // TODO: Validate quantity
-    if ($_POST['quantity'] == 0) {
-        array_splice($cartItems, $indexInArray, 1);
-    } else {
-        $cartItems[$indexInArray]->setProductQuantity($_POST['quantity']);
+    if ($_POST['quantity'] <= $_POST['productStockQuantity']) {
+        $cart = unserialize($_SESSION['cart']);
+        $indexInArray = getProductIndexInArray($_POST['productSku'], $cart->getCartItems());
+        if ($_POST['quantity'] == 0) {
+            $cart->removeCartItem($indexInArray);
+        } else {
+            $cart->getCartItems()[$indexInArray]->setProductQuantity($_POST['quantity']);
+        }
+        
+        $_SESSION['cart'] = serialize($cart);
+        header('Location: cart.php');
+        exit();
     }
-    
-    $_SESSION['cartItems'] = serialize($cartItems);
-    header('Location: cart.php');
+
+    header('Location: cart.php?quantity_err=true');
     exit();
 }
 
 $totalPrice = 0;
 $hasEmptyCart = true;
 
-if (isset($_SESSION['cartItems'])) {
-    if (sizeof(unserialize($_SESSION['cartItems'])) > 0) {
+if (isset($_SESSION['cart'])) {
+    $cart = unserialize($_SESSION['cart']);
+    if (sizeof($cart->getCartItems()) > 0) {
         $hasEmptyCart = false;
     }
+}
+
+if (isset($_POST['order'])){
+    if (!isset($_SESSION['email'])) {
+        header('Location: signin.php?no_login=true');
+        exit();
+    }
+
+    if (sizeof($cart->getCartItems()) <= 0) {
+        header('Location: cart.php?cart_empty=true');
+        exit();
+    }
+
+    if ($cart != null) {
+        $cart->setEmail($_SESSION['email']);
+        $_SESSION['orderConfirmation'] = true;
+        header('Location: reviewOrder.php');
+        exit();
+    }
+    redirectToIndexAndExit();
 }
 
 ?>
@@ -41,6 +68,7 @@ if (isset($_SESSION['cartItems'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panier | Maverick Custom Shop </title>
     <?php require_once('includes/head.php'); ?>
+    <script defer src="js/validationCart.js"></script>
 </head>
 
 <body>
@@ -48,8 +76,27 @@ if (isset($_SESSION['cartItems'])) {
         <?php include('includes/navbar.php'); ?>
     </header>
     <main class="row g-5 mt-3 mb-3 container-fluid">
-        <h1>Votre Panier</h1>
+        <?php if ($hasCartEmptyAlert) { ?>
+            <div class="container-fluid">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span>Vous ne pouvez pas passer un panier vide en commande</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        <?php 
+        } if ($hasQuantityError) {
+        ?>
+            <div class="container-fluid">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span>La quantité demandée n'est pas valide</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        <?php
+        }
+        ?>
 
+        <h1>Votre Panier</h1>
         <?php
 
         if ($hasEmptyCart) {?>
@@ -58,10 +105,10 @@ if (isset($_SESSION['cartItems'])) {
             </div>
         <?php }
 
-        if (isset($_SESSION['cartItems'])) {
+        if (isset($_SESSION['cart'])) {
 
-            $cartItems = unserialize($_SESSION['cartItems']);
-            foreach ($cartItems as $item) {
+            $cart = unserialize($_SESSION['cart']);
+            foreach ($cart->getCartItems() as $item) {
                 $product = $item->getProduct();
                 $name = $product->getName();
                 $description = $product->getDescription();
@@ -69,7 +116,7 @@ if (isset($_SESSION['cartItems'])) {
                 $stock = $product->getStock();
                 $sku = $product->getSku();
                 $quantity = $item->getProductQuantity();
-                $totalPrice += $price;
+                $totalPrice += $price*$quantity;
                 
                 ?>
                 <div class="col-lg-6 col-md-12 text-center">
@@ -86,7 +133,7 @@ if (isset($_SESSION['cartItems'])) {
                         <?php echo $price; ?>$
                     </h5>
 
-                    <form action="cart.php" method="post">
+                    <form class="needs-validation" action="cart.php" method="post" novalidate>
                         <div class="row g-5">
                             <div class="col-sm-12 col-md-6">
                                 <input 
@@ -98,8 +145,12 @@ if (isset($_SESSION['cartItems'])) {
                                     value='<?php echo $quantity;?>'
                                     max="<?php echo $stock; ?>" 
                                     required>
+                                <div class="invalid-feedback">
+                                    La quantité demandée n'est pas valide
+                                </div>
                             </div>
                                 <input type="number" name="productSku" value="<?php echo $sku ?>" hidden>
+                                <input type="number" name="productStockQuantity" value="<?php echo $stock; ?>" hidden>
                             <div class="col-sm-12 col-md-6">
                                 <button type="submit" class="btn btn-outline-primary">Modifier le panier</button>
                             </div>
@@ -112,6 +163,7 @@ if (isset($_SESSION['cartItems'])) {
             Sous-total : <?php echo $totalPrice ?> $
         </p>
         <form action="cart.php" method="post">
+            <input type="text" name="order" hidden>
             <button type="submit" class="btn btn-outline-primary">Passer la commande</button>
         </form>
     </main>
