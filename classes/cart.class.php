@@ -5,11 +5,11 @@ require_once('cartItem.class.php');
 class Cart
 {
     private $cartItems;
-    private $user;
+    private $email;
 
-    public function __construct(User $user)
+    public function __construct(string $email)
     {
-        $this->setUser($user);
+        $this->setEmail($email);
         $this->setCartItems(array());
     }
 
@@ -24,17 +24,17 @@ class Cart
         $this->cartItems = $cartItems;
     }
 
-    // TODO: Add function to get user -> DONE
-    public function getUser(): User
+    // TODO: Add function to get email -> DONE
+    public function getEmail(): string
     {
-        return $this->user;
+        return $this->email;
     }
 
-    private function setUser(User $user)
+    private function setEmail(string $email)
     {
-        if ($user == null)
+        if ($email == null)
             throw new Exception('User cannot be null');
-        $this->user = $user;
+        $this->email = $email;
     }
 
     public function addCartItem(CartItem $cartItem): void
