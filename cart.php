@@ -108,8 +108,13 @@ if (isset($_SESSION['cartItems'])) {
                     </form>
                 </div>
                 <?php }}?>
+<<<<<<< HEAD
+        <p>
+            Sous-total : <?php echo $totalPrice ?> $
+=======
         <p>Sous-total : 
             <?php echo $totalPrice ?> $
+>>>>>>> 78c8fc1d2587cf451bb9d4f9ded57791cfa91c06
         </p>
         <form action="cart.php" method="post">
             <button type="submit" class="btn btn-outline-primary">Passer la commande</button>

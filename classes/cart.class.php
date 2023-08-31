@@ -24,7 +24,11 @@ class Cart
         $this->cartItems = $cartItems;
     }
 
-    // TODO: Add function to get user id
+    // TODO: Add function to get user -> DONE
+    public function getUser(): User
+    {
+        return $this->user;
+    }
 
     private function setUser(User $user)
     {
