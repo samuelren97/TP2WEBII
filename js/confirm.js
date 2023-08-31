@@ -1,6 +1,6 @@
-let btnReturnToProducts = document.querySelector('button');
+let btnReturnToIndex = document.getElementById('btnReturn');
 
 
-btnReturnToProducts.addEventListener('click', (e) => {
-    window.location.href = 'product.php';
+btnReturnToIndex.addEventListener('click', (e) => {
+    window.location.href = 'index.php';
 });

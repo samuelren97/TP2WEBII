@@ -9,6 +9,9 @@ $fileName = substr(__FILE__, strrpos(__FILE__, '\\')+1);
 
 $isLoginSuccess = isset($_GET['login']);
 $isSignoutSuccess = isset($_GET['signout']);
+
+if (!isset($_SESSION['cart']))
+    $_SESSION['cart'] = serialize(new Cart());
 ?>
 
 <!DOCTYPE html>

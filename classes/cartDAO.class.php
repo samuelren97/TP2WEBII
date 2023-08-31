@@ -32,10 +32,10 @@ class CartDAO
         }
         return true;
     }
-    public function add(Cart $cart): void
+    public function addOrder(Cart $cart): void
     {
         $req = $this->db->prepare('INSERT INTO orders(user_id, creation_date) VALUES(
-            (SELECT userId FROM users WHERE email=:email), NOW())');
+            (SELECT id FROM users WHERE email=:email), NOW())');
         $req->bindValue(':email', $cart->getEmail(), PDO::PARAM_STR);
         $req->execute();
         $orderId = $this -> db->lastInsertId();
@@ -47,10 +47,9 @@ class CartDAO
                 
             $req->bindValue(':order_id', $orderId, PDO::PARAM_INT);
             $req->bindValue(':product_sku', $cartItem->getProductSku(), PDO::PARAM_INT);
-            $req->bindValue(':quantity', $cartItem->getQuantity(), PDO::PARAM_INT);
+            $req->bindValue(':quantity', $cartItem->getProductQuantity(), PDO::PARAM_INT);
             $req->execute();
         }
-        
         $req->closeCursor();
     }
 }

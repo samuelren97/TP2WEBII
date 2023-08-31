@@ -44,13 +44,13 @@ if (isset($_POST['order'])){
         exit();
     }
 
-    if (sizeof($cart->getCartItems()) <= 0) {
-        header('Location: cart.php?cart_empty=true');
-        exit();
-    }
-
     if ($cart != null) {
+        if (sizeof($cart->getCartItems()) <= 0) {
+            header('Location: cart.php?cart_empty=true');
+            exit();
+        }
         $cart->setEmail($_SESSION['email']);
+        $_SESSION['cart'] = serialize($cart);
         $_SESSION['orderConfirmation'] = true;
         header('Location: reviewOrder.php');
         exit();
