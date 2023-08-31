@@ -95,9 +95,9 @@ if (isset($_POST['quantity'])) {
                     </form>
                 </div>
                 <?php }}?>
-        <p>Sous-total : 
-        <span><?php echo $totalPrice ?> $</span>
-            </p>
+        <p>
+            Sous-total : <?php echo $totalPrice ?> $
+        </p>
         <form action="cart.php" method="post">
             <button type="submit" class="btn btn-outline-primary">Passer la commande</button>
         </form>
