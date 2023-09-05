@@ -5,6 +5,8 @@ require_once('classes/cartDAO.class.php');
 require_once('includes/connection.php');
 $fileName = '';
 
+$hasStockError = false;
+
 if(!isset($_SESSION['checkoutConfirmation'])){
     header('Location: index.php');
     exit();
@@ -13,39 +15,43 @@ if(!isset($_SESSION['checkoutConfirmation'])){
 $cartDao = new CartDAO($conn);
 $cart = unserialize($_SESSION['cart']);
 unset($_SESSION['checkoutConfirmation']);
-unset($_SESSION['cart']); // Reinitialize le cart un fois la commande confirmee et ajuste les products stock dans la $_SESSION['cart'] provenant de la BD a jour)
+unset($_SESSION['cart']); 
 if($cartDao->hasEnoughStockForCart($cart)){
     $cartDao->addOrder($cart);
     $cartDao->adjustStockQuantities($cart);
-}
-else{
-    echo "Inventaire insuffisant depuis l'ajout au panier. 
-    Veillez svp ajouter vos items de nouveau, les quantitee en stock sont maintenant a jour."; //TODO: affichage erreur conflit d'inventaire
+} else {
+    $hasStockError=true;
 }
 $conn = null; 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation | Maverick Custom Shop</title>
-    <script defer src="js/confirm.js"></script>
-    <?php require_once('includes/head.php'); ?>
-</head>
-
-<body>
-    <header>
-        <?php include('includes/navbar.php'); ?>
-    </header>
-
-    <main class="container-fluid">
-        <p> Merci pour votre commande ! </p>
-        <form action="confirm.php">
-            <button class="btn btn-outline-primary">Continuer de magasiner</button>
-        </form>
-    </main>
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Confirmation | Maverick Custom Shop</title>
+        <script defer src="js/confirm.js"></script>
+        <?php require_once('includes/head.php'); ?>
+    </head>
+    
+    <body>
+        <header>
+            <?php include('includes/navbar.php'); ?>
+        </header>
+        
+        <main class="container-fluid text-center">
+            <?php if ($hasStockError) { ?>
+                <p class="text-danger mt-5">Inventaire non disponible depuis l'ajout au panier. Veillez ajouter des items de nouveau.</p>
+            <?php } else { ?>
+                <h1 class="mt-5">Merci pour votre commande</h1>
+            <?php } ?>
+            <a class="text-decoration-none text-white" href="index.php">
+                <button class="mt-5 mb-5 btn btn-primary">
+                    Continuer de magasiner
+                </button>
+            </a>
+        </main>
     <footer>
         <?php include('includes/footer.php'); ?>
     </footer>

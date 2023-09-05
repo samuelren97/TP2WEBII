@@ -42,6 +42,9 @@ if (!isset($_SESSION['cart']))
                         <h4><?php echo $product->getName(); ?></h4>
                         <img src="images/<?php echo $product->getSku() ?>.png" alt="<?php echo $product->getDescription(); ?>">
                         <p class="fw-bold"><?php echo $product->getPrice() . '$'; ?></p>
+                        <?php if($product->getStock() == 0) {  ?>
+                            <p class="text-danger">Item en rupture de stock</p>
+                        <?php } ?>  
                     </div>
                 </a>
                 <?php

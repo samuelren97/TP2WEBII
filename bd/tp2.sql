@@ -102,13 +102,7 @@ INSERT INTO `products` (`sku`, `name`, `description`, `price`, `stock`) VALUES
 (887414, 'Solar V1.6 Vinter', 'Logo gravé sur la 12eme touche', '1495.99', 5),
 (634920, 'Solar AB1.4JN FLAME BLACK','Basse plus noire que la nuit', '1355.95', 2),
 (936421, 'Fender American Ultra Jazz Bass V', 'Basse 5 cordes faite à la main','2455.95', 1),
-(238954, 'BC Rich Ironbird MK1', "Basse aussi coupante qu'un rasoir", '1325.00', 5);
-
--- use tp2_samuel_alexandre;
--- SELECT * FROM products;
--- SELECT * FROM users;
--- SELECT * FROM orders;
--- SELECT * FROM order_items;
+(238954, 'BC Rich Ironbird MK1', "Basse aussi coupante qu'un rasoir", '1325.95', 5);
 
 -- SELECT * FROM users WHERE email='sam@sam.com' AND password='$2y$10$MIUv1TU0SFMOsljt4RL54uZK9DTU/ASKh7JU9fJ0Pm7yybI9Dd55a';
 
