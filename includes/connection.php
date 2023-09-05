@@ -13,3 +13,4 @@ try {
 } catch (PDOException $e) {
     exit("Erreur lors de la connexion à la BD: " . $e->getMessage());
 }
+?>

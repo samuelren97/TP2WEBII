@@ -35,6 +35,8 @@ class Cart
     {
         if ($email == null)
             throw new Exception('Email cannot be null');
+        if (!isValidEmail($email))
+            throw new Exception('Email must be in correct format');
         $this->email = $email;
     }
 

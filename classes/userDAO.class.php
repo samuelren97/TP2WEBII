@@ -17,6 +17,11 @@ class UserDAO
 
     public function getUserWithEmail(string $email) : ?User
     {
+        if ($email == null || empty(trim($email)))
+            throw new Exception('The email cannot be empty or null');
+        if (!isValidEmail($email))
+            throw new Exception('Email must be in correct format');
+
         $user = null;
         $req = $this->db->prepare('SELECT * FROM users WHERE email=:email');
         $req->bindValue(':email', $email, PDO::PARAM_STR);
@@ -33,6 +38,14 @@ class UserDAO
 
     public function getValidatedUser(string $email, string $password) : ?User
     {
+        if ($email == null || empty(trim($email)))
+            throw new Exception('The email cannot be empty or null');
+        if (!isValidEmail($email))
+            throw new Exception('Email must be in correct format');
+
+        if ($password == null || empty(trim($password)))
+            throw new Exception('The password cannot be empty or null');
+
         $user = null;
         $req = $this->db->prepare('SELECT * FROM users WHERE email=:email');
         $req->bindValue(':email', $email, PDO::PARAM_STR);
@@ -50,6 +63,11 @@ class UserDAO
     }
 
     public function userExists(string $email) : bool {
+        if ($email == null || empty(trim($email)))
+            throw new Exception('The email cannot be empty or null');
+        if (!isValidEmail($email))
+            throw new Exception('Email must be in correct format');
+
         $req = $this->db->prepare('SELECT email FROM users WHERE email=:email');
 
         $req->bindValue(':email', $email, PDO::PARAM_STR);
@@ -64,6 +82,9 @@ class UserDAO
     
     public function add(User $user): void
     {
+        if ($user == null)
+            throw new Exception('User cannot be null');
+
         $req = $this->db->prepare('INSERT INTO users(email,password,first_name,last_name,shipping_address)
         VALUES (:email, :password, :first_name, :last_name, :shipping_address)');
 
@@ -75,9 +96,6 @@ class UserDAO
         $req->bindValue(':shipping_address', $user->getShippingAddress(), PDO::PARAM_STR);
 
         $req->execute();
-        
-        
-        $last_id = $this -> db->lastInsertId();
 
         $req->closeCursor();
     }

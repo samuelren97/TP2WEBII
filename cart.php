@@ -10,7 +10,7 @@ $hasCartEmptyAlert = isset($_GET['cart_empty']);
 $hasQuantityError = isset($_GET['quantity_err']);
 
 if (isset($_POST['quantity'])) {
-    if ($_POST['quantity'] <= $_POST['productStockQuantity']) {
+    if ($_POST['quantity'] >= 0 && $_POST['quantity'] <= $_POST['productStockQuantity']) {
         $cart = unserialize($_SESSION['cart']);
         $indexInArray = getProductIndexInArray($_POST['productSku'], $cart->getCartItems());
         if ($_POST['quantity'] == 0) {
@@ -67,7 +67,7 @@ if (isset($_POST['order'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panier | Maverick Custom Shop </title>
-    <?php require_once('includes/head.php'); ?>
+    <?php require_once('includes/head.html'); ?>
     <script defer src="js/validationCart.js"></script>
 </head>
 
@@ -139,7 +139,6 @@ if (isset($_POST['order'])){
                                 <input 
                                     type="number" 
                                     class="form-control" 
-                                    id="quantity" 
                                     name="quantity" 
                                     min='0' 
                                     value='<?php echo $quantity;?>'
@@ -160,16 +159,16 @@ if (isset($_POST['order'])){
                 </div>
                 <?php }}?>
         <p>
-            Sous-total : <?php echo $totalPrice ?> $
+            Sous-total : <?php echo number_format($totalPrice, 2) ?> $
         </p>
         <form action="cart.php" method="post">
             <input type="text" name="order" hidden>
             <button type="submit" class="btn btn-outline-primary">Passer la commande</button>
         </form>
     </main>
-    <footer>
-        <?php include('includes/footer.php'); ?>
-    </footer>
+    
+        <?php include('includes/footer.html'); ?>
+    
 </body>
 
 </html>

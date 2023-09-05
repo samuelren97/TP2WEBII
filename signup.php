@@ -59,7 +59,7 @@ if ($isPost && isset($_POST['email'])) {
     <script defer src='js/validationSignup.js'></script>
 
     <title>Créer un compte | Maverick Custom Shop</title>
-    <?php require_once('includes/head.php'); ?>
+    <?php require_once('includes/head.html'); ?>
 </head>
 <body>
     <header>
@@ -192,9 +192,9 @@ if ($isPost && isset($_POST['email'])) {
         ?>
 
 </main>
-<footer>
-    <?php include('includes/footer.php'); ?>
-</footer>
+
+    <?php include('includes/footer.html'); ?>
+
 </body>
 </html>
 <?php $conn = null; ?>

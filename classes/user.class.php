@@ -23,6 +23,8 @@ class User {
     public function setEmail(string $email) : void {
         if ($email == null || empty(trim($email)))
             throw new Exception('The email cannot be empty or null');
+        if (!isValidEmail($email))
+            throw new Exception('Email must be in correct format');
         $this->email = $email;
     }
 

@@ -38,7 +38,7 @@ if (isset($_POST['quantity'])) {
         header('Location: product.php?sku='. $sku);
         exit();
     }
-    if ($_POST['quantity'] <= $product->getStock()) {
+    if ($_POST['quantity'] >=0 && $_POST['quantity'] <= $product->getStock()) {
         $cartItem = new CartItem($product, $_POST['quantity']);
         $cartItem->setProductSku($sku);
         if ($cart == null) {
@@ -64,7 +64,7 @@ $stock = $product->getStock();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $name . " | Maverick Custom Shop" ?></title>
-    <?php require_once('includes/head.php'); ?>
+    <?php require_once('includes/head.html'); ?>
     <script defer src="js/validationProduct.js"></script>
 </head>
 <body>
@@ -106,9 +106,9 @@ $stock = $product->getStock();
 
         </div>
     </main>
-    <footer>
-        <?php include('includes/footer.php'); ?>
-    </footer>
+    
+        <?php include('includes/footer.html'); ?>
+    
 </body>
 </html>
 <?php $conn = null; ?>

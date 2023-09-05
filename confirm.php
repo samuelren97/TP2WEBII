@@ -32,7 +32,7 @@ $conn = null;
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Confirmation | Maverick Custom Shop</title>
         <script defer src="js/confirm.js"></script>
-        <?php require_once('includes/head.php'); ?>
+        <?php require_once('includes/head.html'); ?>
     </head>
     
     <body>
@@ -52,9 +52,9 @@ $conn = null;
                 </button>
             </a>
         </main>
-    <footer>
-        <?php include('includes/footer.php'); ?>
-    </footer>
+    
+        <?php include('includes/footer.html'); ?>
+    
 </body>
 
 </html>

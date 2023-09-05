@@ -30,6 +30,8 @@ class CartItem
     }
 
     public function setProductSku(int $sku) : void {
+        if ($sku < 0)
+            throw new Exception("SKU can't be a negative number");
         $this->getProduct()->setSku($sku);
     }
 

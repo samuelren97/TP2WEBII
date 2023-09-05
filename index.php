@@ -21,7 +21,7 @@ if (!isset($_SESSION['cart']))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceuil | Maverick Custom Shop</title>
-    <?php require_once('includes/head.php'); ?>
+    <?php require_once('includes/head.html'); ?>
 </head>
 
 <body>
@@ -77,9 +77,9 @@ if (!isset($_SESSION['cart']))
             ?>
             
         </main>
-        <footer>
-            <?php include('includes/footer.php'); ?>
-        </footer>
+        
+            <?php include('includes/footer.html'); ?>
+        
     </body>
     
     </html>

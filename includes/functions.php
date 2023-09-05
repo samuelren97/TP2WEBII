@@ -11,11 +11,10 @@ function redirectToErrorPageAndExit() : void {
 }
 
 function isValidEmail(string $email) : bool {
-    $regex = "/[a-z0-9]+@[a-z]+.[a-z]{2,3}/";
-    if (preg_match($regex, $email) == 1) {
-        return true;
-    }
-    return false;
+    $regex = "/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/";
+    if (!preg_match($regex ,$email))
+        return false;
+    return true;
 }
 
 function getProductIndexInArray(int $skuToFind, array $array) : int {

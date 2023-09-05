@@ -45,7 +45,7 @@
    </div>
 {{lines}}
 {{structure}}
-   <footer>
+   
     <hr/>
     <h4>Legend</h4>
     {{legend}}
@@ -55,7 +55,7 @@
     <a title="Back to the top" id="toplink" href="#">
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M12 11L6 5l-6 6h12z"/></svg>
     </a>
-   </footer>
+   
   </div>
   <script src="{{path_to_root}}_js/jquery.min.js?v={{version}}" type="text/javascript"></script>
   <script src="{{path_to_root}}_js/popper.min.js?v={{version}}" type="text/javascript"></script>

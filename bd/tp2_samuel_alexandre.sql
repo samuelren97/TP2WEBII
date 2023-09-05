@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `baie_ourson`
 --
-DROP DATABASE IF EXISTS tp2_samuel_alexandre;
+DROP DATABASE IF EXISTS tp2_Samuel_Alexandre;
 CREATE DATABASE TP2_Samuel_Alexandre;
 USE TP2_Samuel_Alexandre;
 -- --------------------------------------------------------

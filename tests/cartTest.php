@@ -87,5 +87,45 @@ class CartTest extends TestCase
         $this->assertEquals($product2Sku, $cart->getCartItems()[0]->getProductSku());
     }
 
+    public function testEmailFormat() : void {
+        $cart = new Cart();
+        $this->assertNotNull($cart->getEmail());
+
+        $cart->setEmail("a@a.ac");
+        $this->assertEquals("a@a.ac",$cart->getEmail());
+
+        $cart->setEmail("123@abc.com");
+        $this->assertEquals("123@abc.com",$cart->getEmail());
+    }
+
+    public function testsInvalidEmailWithOneDigit(){
+        $cart = new Cart();
+        $this->expectException(Exception::class);
+        $cart->setEmail("1");
+    }
+
+    public function testsInvalidEmailWithoutPeriod(){
+        $cart = new Cart();
+        $this->expectException(Exception::class);
+        $cart->setEmail("a@bcd");
+    }
+
+    public function testsInvalidEmailWithoutArobas() {
+        $cart = new Cart();
+        $this->expectException(Exception::class);
+        $cart->setEmail("a.bcd");
+    }
+
+    public function testsInvalidEmailWithoutEnoughCharsAfterPeriod(){
+        $cart = new Cart();
+        $this->expectException(Exception::class);
+        $cart->setEmail("a@bcd.e");
+    }
+    
+    public function testsInvalidEmailWithNumbersAfterPeriod(){
+        $cart = new Cart();
+        $this->expectException(Exception::class);
+        $cart->setEmail("a@b.123");
+    }
     
 }

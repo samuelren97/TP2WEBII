@@ -19,6 +19,9 @@ $isNotLoggedIn = isset($_GET['no_login']);
 if ($isPost && isset($_POST['email'])) {
     $email = $_POST['email'];
     
+    // var_dump(!isValidEmail($email));
+    // exit();
+
     if (!isValidEmail($email) || empty($_POST['password'])) {
         $hasFormErrors = true;
     } else {
@@ -43,7 +46,7 @@ if ($isPost && isset($_POST['email'])) {
     <script defer src='js/validationSignin.js'></script>
 
     <title>Se Connecter | Maverick Custom Shop</title>
-    <?php require_once('includes/head.php'); ?>
+    <?php require_once('includes/head.html'); ?>
 </head>
 <body>
     <header>
@@ -142,9 +145,9 @@ if ($isPost && isset($_POST['email'])) {
         }
         ?>
     </main>
-    <footer>
-        <?php include('includes/footer.php'); ?>
-    </footer>
+    
+        <?php include('includes/footer.html'); ?>
+    
 </body>
 </html>
 <?php $conn = null; ?>

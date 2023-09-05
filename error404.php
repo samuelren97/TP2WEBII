@@ -7,12 +7,14 @@ $fileName = '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erreur 404 | Maverick Custom Shop</title>
-    <?php include_once('includes/head.php'); ?>
+    <?php include_once('includes/head.html'); ?>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <head>
+    <header>
         <?php include_once('includes/navbar.php'); ?>
+    </header>
+    <main>
         <div class="banner-container mb-3">
             <div class="banner">
                 <div class="title">
@@ -25,9 +27,8 @@ $fileName = '';
                 </p>
             </div>
         </div>
-    </head>
-    <footer>
-        <?php include_once('includes/footer.php'); ?>
-    </footer>
+
+    </main> 
+    <?php include_once('includes/footer.html'); ?>
 </body>
 </html>

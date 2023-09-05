@@ -18,6 +18,9 @@ class CartDAO
 
     public function hasEnoughStockForCart(Cart $cart): bool
     {
+        if ($cart == null)
+            throw new Exception('The cart cannot be null');
+
         foreach ($cart->getCartItems() as $item) {
             $quantity = $item->getProductQuantity();
 
@@ -36,19 +39,22 @@ class CartDAO
     }
     public function addOrder(Cart $cart): void
     {
+        if ($cart == null)
+            throw new Exception('The cart cannot be null');
+
         $req = $this->db->prepare('INSERT INTO orders(user_id, creation_date) VALUES(
             (SELECT id FROM users WHERE email=:email), NOW())');
         $req->bindValue(':email', $cart->getEmail(), PDO::PARAM_STR);
         $req->execute();
         $orderId = $this->db->lastInsertId();
 
-        foreach ($cart->getCartItems() as $cartItem) {
+        foreach ($cart->getCartItems() as $item) {
             $req = $this->db->prepare('INSERT INTO order_items(order_id,product_sku,quantity)
                 VALUES (:order_id, :product_sku, :quantity)');
 
             $req->bindValue(':order_id', $orderId, PDO::PARAM_INT);
-            $req->bindValue(':product_sku', $cartItem->getProductSku(), PDO::PARAM_INT);
-            $req->bindValue(':quantity', $cartItem->getProductQuantity(), PDO::PARAM_INT);
+            $req->bindValue(':product_sku', $item->getProductSku(), PDO::PARAM_INT);
+            $req->bindValue(':quantity', $item->getProductQuantity(), PDO::PARAM_INT);
             $req->execute();
         }
         $req->closeCursor();
@@ -56,6 +62,9 @@ class CartDAO
 
     public function adjustStockQuantities(Cart $cart): void
     {
+        if ($cart == null)
+            throw new Exception('The cart cannot be null');
+
         foreach ($cart->getCartItems() as $item) {
             
             $qtyOrdered = $item->getProductQuantity();

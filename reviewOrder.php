@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+const TAX_DECIMAL_POINTS = 2;
+const TAXES_RATE = 1.14975;
+
 require_once('classes/cart.class.php');
 require_once('includes/connection.php');
 require_once('classes/user.class.php');
@@ -34,7 +37,7 @@ $totalPrice=0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revoir la commande | Maverick Custom Shop </title>
-    <?php require_once('includes/head.php'); ?>
+    <?php require_once('includes/head.html'); ?>
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/reviewOrder.js"></script>
 </head>
@@ -93,7 +96,7 @@ $totalPrice=0;
 
             
         <hr><p class='bold fs-2'>
-            Total :  <?php echo $totalPrice ?> $
+            Total :  <?php echo number_format($totalPrice*TAXES_RATE, TAX_DECIMAL_POINTS) ?> $ taxes incluses
         </p>
 
         <div id="btnDiv">
@@ -104,9 +107,9 @@ $totalPrice=0;
             <button class="btn btn-outline-primary">Retour au panier</button>
         </div>
     </main>
-    <footer>
-        <?php include('includes/footer.php'); ?>
-    </footer>
+    
+        <?php include('includes/footer.html'); ?>
+    
 </body>
 
 </html>
