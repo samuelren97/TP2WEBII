@@ -19,9 +19,6 @@ $isNotLoggedIn = isset($_GET['no_login']);
 if ($isPost && isset($_POST['email'])) {
     $email = $_POST['email'];
     
-    // var_dump(!isValidEmail($email));
-    // exit();
-
     if (!isValidEmail($email) || empty($_POST['password'])) {
         $hasFormErrors = true;
     } else {

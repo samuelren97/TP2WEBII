@@ -48,7 +48,6 @@ class Cart
         $sku = $cartItem->getProduct()->getSku();
         $indexInArray = getProductIndexInArray($sku, $this->cartItems);
         if ($indexInArray >= 0) {
-            // TODO: Validate quantity from stock with ones in cart
             $quantity = $this->cartItems[$indexInArray]->getProductQuantity();
             $stockQuantity = $this->cartItems[$indexInArray]->getProductStock();
 
